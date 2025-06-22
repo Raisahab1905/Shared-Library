@@ -1,4 +1,4 @@
-package org.teamdowntimecrew.common
+package org.teamdowntime.common
 
 class DastRunner {
     static void run(context, Map config = [:]) {
