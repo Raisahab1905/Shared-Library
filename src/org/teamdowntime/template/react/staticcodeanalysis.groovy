@@ -11,4 +11,3 @@ import org.teamdowntime.common.*
         gitCheckOut.call(branch, url, creds)
         runSonarQubeAnalysis.call(projectKey, sonarUrl, sonarSources, sonarToken)
     }
-}
