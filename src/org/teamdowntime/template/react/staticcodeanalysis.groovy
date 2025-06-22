@@ -7,12 +7,12 @@ import org.teamdowntime.common.cleanworkspace
 class staticcodeanalysis implements Serializable {
 
     def call(String branch, String url, String creds, String projectKey, String sonarUrl, String sonarSources, String sonarToken) {
-        def gitCheckOut = new checkout()
-        def wsClean = new cleanworkspace()
-        def sonar = new sonarqube()
+        def checkout = new checkout()
+        def cleanworkspace = new cleanworkspace()
+        def sonarqube = new sonarqube()
 
-        wsClean.call()
-        gitCheckOut.call(branch, url, creds)
-        sonar.call(projectKey, sonarUrl, sonarSources, sonarToken)
+        cleanworkspace.call()
+        checkout.call(branch, url, creds)
+        sonarqube.call(projectKey, sonarUrl, sonarSources, sonarToken)
     }
 }
