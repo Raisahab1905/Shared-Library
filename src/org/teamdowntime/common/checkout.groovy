@@ -1,12 +1,15 @@
 package org.teamdowntime.common
 
-def call(Map config = [:]) {
-    def repoName = config.repoName ?: error("Missing repoName")
-    def branch = config.branch ?: 'main'
-    def url = config.url ?: error("Missing Git repo URL")
-    def credentialsId = config.credentialsId ?: error("Missing credentialsId")
+class checkout implements Serializable {
 
-    dir(repoName) {
-        git branch: branch, credentialsId: credentialsId, url: url
+    def call(String branch, String repoUrl, String credsId) {
+        checkout([
+            $class: 'GitSCM',
+            branches: [[name: "*/${branch}"]],
+            userRemoteConfigs: [[
+                url: repoUrl,
+                credentialsId: credsId
+            ]]
+        ])
     }
 }
