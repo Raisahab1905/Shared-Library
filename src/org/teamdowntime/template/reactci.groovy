@@ -5,7 +5,7 @@ import org.teamdowntimecrew.common.cleanWorkspace
 import org.teamdowntimecrew.common.checkout
 import org.teamdowntimecrew.common.dast
 import org.teamdowntimecrew.common.notification
-import org.teamdowntimecrew.common.DastRunner
+import org.teamdowntimecrew.common.dastrunner
 
 def call(Map pipelineConfig = [:]) {
 
