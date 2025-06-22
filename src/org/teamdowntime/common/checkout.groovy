@@ -1,4 +1,4 @@
-package org.teamdowntimecrew.common
+package org.teamdowntime.common
 
 def call(Map config = [:]) {
     def repoName = config.repoName ?: error("Missing repoName")
