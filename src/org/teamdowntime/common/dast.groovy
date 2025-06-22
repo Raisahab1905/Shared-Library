@@ -1,4 +1,4 @@
-package org.teamdowntimecrew.common
+package org.teamdowntime.common
 
 def call(Map config = [:]) {
     def ZAP_HOME = config.get('ZAP_HOME', "/var/lib/jenkins/.ZAP-CI")
