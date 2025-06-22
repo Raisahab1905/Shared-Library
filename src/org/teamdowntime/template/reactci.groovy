@@ -1,10 +1,7 @@
 package org.teamdowntime.template
 
 // Import all reusable classes
-import org.teamdowntimecrew.common.cleanWorkspace
-import org.teamdowntimecrew.common.checkout
-import org.teamdowntimecrew.common.DastRunner
-import org.teamdowntimecrew.common.notification
+import org.teamdowntimecrew.common.*
 
 def call(Map pipelineConfig = [:]) {
     try {
