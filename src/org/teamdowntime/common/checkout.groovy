@@ -1,10 +1,6 @@
 package org.teamdowntime.common
 
     def call(String branch, String repoUrl, String credsId) {
-        println "[INFO] Checkout Parameters:"
-        println "[INFO] Branch     : ${branch}"
-        println "[INFO] Repository : ${repoUrl}"
-        println "[INFO] Credentials: ${credsId}"
 
         checkout([
             $class: 'GitSCM',
