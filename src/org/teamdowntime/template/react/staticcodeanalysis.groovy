@@ -2,8 +2,6 @@ package org.teamdowntime.template.react
 
 import org.teamdowntime.common.*
 
-class staticcodeanalysis implements Serializable {
-
     def call(String branch, String url, String creds, String projectKey, String sonarUrl, String sonarSources, String sonarToken) {
         println "[INFO] --- Static Code Analysis Parameters ---"
         println "[INFO] Branch        : ${branch}"
@@ -18,8 +16,8 @@ class staticcodeanalysis implements Serializable {
         def cleanworkspace = new cleanworkspace()
         def sonarqube = new sonarqube()
 
-        checkout.call(branch, url, creds)
         cleanworkspace.call()
+        checkout.call(branch, url, creds)
         sonarqube.call(projectKey, sonarUrl, sonarSources, sonarToken)
-    }
+    
 }
