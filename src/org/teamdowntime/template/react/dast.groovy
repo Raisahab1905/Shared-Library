@@ -2,14 +2,40 @@ package org.teamdowntime.template.react
 
 import org.teamdowntime.common.*
 
-def call(String branch, String url, String creds, String projectKey, String sonarUrl, String sonarSources, String sonarToken) {
-    def gitCheckOut = new gitCheckOut()
-    def wsClean = new wsClean()
-    def installDependencies = new installDependencies()
-    def runSonarQubeAnalysis = new runSonarQubeAnalysis()
+def call(String targetUrl, String slackChannel, String slackCredId, String emailTo, String buildTrigger) {
+    def dastRunner = new DastRunner()
+    def notifier = new notification(this)
 
-    wsClean.call()
-    gitCheckOut.call(branch, url, creds)
-    installDependencies.call()
-    runSonarQubeAnalysis.call(projectKey, sonarUrl, sonarSources, sonarToken)
+    try {
+        dastRunner.run(this, [TARGET_URL: targetUrl])
+
+        notifier.call([
+            status: 'SUCCESS',
+            buildTrigger: buildTrigger,
+            failureReason: '',
+            failedStage: '',
+            slackChannel: slackChannel,
+            slackCredId: slackCredId,
+            emailTo: emailTo,
+            reportLinks: [
+                [name: 'ZAP Report', url: "${env.BUILD_URL}artifact/report.html"]
+            ]
+        ])
+
+    } catch (Exception e) {
+        notifier.call([
+            status: 'FAILURE',
+            buildTrigger: buildTrigger,
+            failureReason: e.message,
+            failedStage: env.STAGE_NAME ?: 'Unknown',
+            slackChannel: slackChannel,
+            slackCredId: slackCredId,
+            emailTo: emailTo,
+            reportLinks: [
+                [name: 'ZAP Report', url: "${env.BUILD_URL}artifact/report.html"]
+            ]
+        ])
+        currentBuild.result = 'FAILURE'
+        throw e
+    }
 }
