@@ -18,7 +18,7 @@ def call(Map pipelineConfig = [:]) {
         }
 
         if (pipelineConfig.dast) {
-                DastRunner.run(thiss, pipelineConfig.dast)
+                DastRunner.run(this, pipelineConfig.dast)
         }
 
         if (pipelineConfig.notification) {
