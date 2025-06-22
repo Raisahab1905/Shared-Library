@@ -1,6 +1,6 @@
 package org.teamdowntime.common
 
-class DastRunner {
+class owaspzap {
     static void run(context, Map config = [:]) {
         def ZAP_HOME = config.get('ZAP_HOME', "/var/lib/jenkins/.ZAP-CI")
         def ZAP_DIR = config.get('ZAP_DIR', "/var/lib/jenkins/.ZAP-CI")
