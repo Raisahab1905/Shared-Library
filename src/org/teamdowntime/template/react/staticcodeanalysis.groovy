@@ -1,8 +1,6 @@
 package org.teamdowntime.template.react
 
-import org.teamdowntime.common.sonarqube
-import org.teamdowntime.common.checkout
-import org.teamdowntime.common.cleanworkspace
+import org.teamdowntime.common.*
 
 class staticcodeanalysis implements Serializable {
 
