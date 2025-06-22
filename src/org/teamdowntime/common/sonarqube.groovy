@@ -8,7 +8,7 @@ def call(String projectKey, String sonarUrl, String sonarSources, String sonarTo
                 -Dsonar.projectKey=${projectKey} \
                 -Dsonar.sources=${sonarSources} \
                 -Dsonar.host.url=${sonarUrl} \
-                -Dsonar.login=${env.SONARQUBE_AUTH_TOKEN}
+                -Dsonar.login=${SONARQUBE_AUTH_TOKEN}
             """
         }
     // }
