@@ -3,10 +3,12 @@ package org.teamdowntime.template.react
 import org.teamdowntime.common.*
 
 def call(String targetUrl, String slackChannel, String slackCredId, String emailTo, String buildTrigger) {
+    def cleanworkspace = new cleanworkspace()
     def dastRunner = new DastRunner()
     def notifier = new notification(this)
 
     try {
+        cleanworkspace.call()
         dastRunner.run(this, [TARGET_URL: targetUrl])
 
         notifier.call([
