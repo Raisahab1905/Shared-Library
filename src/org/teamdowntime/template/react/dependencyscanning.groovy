@@ -10,7 +10,7 @@ def call(Map config) {
     def url = config.get('repoUrl', '')
     def creds = config.get('credentialsId', '')
 
-    cleanworkspace()
+    cleanWs()
     checkout(branch, url, creds)
 
     owasp.run(this, config)
