@@ -9,7 +9,7 @@ class staticcodeanalysis implements Serializable {
         def cleanworkspace = new cleanworkspace()
         def sonarqube = new sonarqube()
 
-        cleanworkspace.call()
+        //cleanworkspace.call()
         checkout.call(branch, url, creds)
         sonarqube.call(projectKey, sonarUrl, sonarSources, sonarToken)
     }
