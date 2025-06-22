@@ -11,21 +11,21 @@ def call(Map pipelineConfig = [:]) {
 
     try {
         stage('Clean Workspace') {
-            CleanWorkspace.run(this)
+            cleanWorkspace.run(this)
         }
 
         stage('Checkout Code') {
-            Checkout.run(this, pipelineConfig.checkout)
+            checkout.run(this, pipelineConfig.checkout)
         }
 
         stage('DAST Scan') {
-        DastRunner.run(this, pipelineConfig.dast)
+        dastrunner.run(this, pipelineConfig.dast)
        }
 
         // success notification
         stage('Notify Success') {
             pipelineConfig.notification.status = 'SUCCESS'
-            Notification.send(this, pipelineConfig.notification)
+            notification.send(this, pipelineConfig.notification)
         }
 
     } catch (Exception e) {
@@ -33,7 +33,7 @@ def call(Map pipelineConfig = [:]) {
         stage('Notify Failure') {
             pipelineConfig.notification.status = 'FAILURE'
             pipelineConfig.notification.errorMessage = e.message
-            Notification.send(this, pipelineConfig.notification)
+            notification.send(this, pipelineConfig.notification)
         }
         currentBuild.result = 'FAILURE'
         throw e
