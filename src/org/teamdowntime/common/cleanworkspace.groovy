@@ -1,5 +1,8 @@
 package org.teamdowntime.common
 
-def call() {
-    cleanWs()
+class cleanworkspace implements Serializable {
+
+    def call() {
+        cleanWs()
+    }
 }
