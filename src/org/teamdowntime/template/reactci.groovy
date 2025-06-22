@@ -1,19 +1,19 @@
 package org.teamdowntime.template
 
-// Import all reusable classes
-import org.teamdowntimecrew.common.*
+// Import reusable classes and methods
+import org.teamdowntime.common.*
 
 def call(Map pipelineConfig = [:]) {
     try {
         if (pipelineConfig.cleanworkspace) {
             stage('Clean Workspace') {
-                cleanWorkspace.run(this)
+                cleanworkspace()
             }
         }
 
         if (pipelineConfig.checkout) {
             stage('Checkout Code') {
-                checkout.run(this, pipelineConfig.checkout)
+                checkout(pipelineConfig.checkout)
             }
         }
 
@@ -26,7 +26,7 @@ def call(Map pipelineConfig = [:]) {
         if (pipelineConfig.notification) {
             stage('Notify Success') {
                 pipelineConfig.notification.status = 'SUCCESS'
-                notification.send(this, pipelineConfig.notification)
+                new notification(this).call(pipelineConfig.notification)
             }
         }
 
@@ -34,8 +34,9 @@ def call(Map pipelineConfig = [:]) {
         if (pipelineConfig.notification) {
             stage('Notify Failure') {
                 pipelineConfig.notification.status = 'FAILURE'
-                pipelineConfig.notification.errorMessage = e.message
-                notification.send(this, pipelineConfig.notification)
+                pipelineConfig.notification.failureReason = e.message
+                pipelineConfig.notification.failedStage = env.STAGE_NAME
+                new notification(this).call(pipelineConfig.notification)
             }
         }
         currentBuild.result = 'FAILURE'
