@@ -4,7 +4,7 @@ import org.teamdowntime.common.*
 
 def call(String targetUrl, String slackChannel, String slackCredId, String emailTo, String buildTrigger) {
     def cleanworkspace = new cleanworkspace()
-    def dastRunner = new DastRunner()
+    def dastRunner = new owaspzap()
     def notifier = new notification(this)
 
     try {
