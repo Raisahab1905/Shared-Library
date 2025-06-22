@@ -9,7 +9,7 @@ class staticcodeanalysis implements Serializable {
         this.steps = steps
     }
 
-    def run(String branch, String url, String creds, String projectKey, String sonarUrl, String sonarSources, String sonarToken) {
+    def call(String branch, String url, String creds, String projectKey, String sonarUrl, String sonarSources, String sonarToken) {
         def gitCheckOut = new checkout()
         def wsClean = new cleanworkspace()
         def runSonarQubeAnalysis = new sonarqube(steps) // 👈 pass steps
