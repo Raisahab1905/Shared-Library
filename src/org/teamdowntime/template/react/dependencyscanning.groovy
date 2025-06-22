@@ -1,6 +1,8 @@
 package org.teamdowntime.template.react
 
 import org.teamdowntime.common.owasp
+import org.teamdowntime.common.cleanworkspace
+import org.teamdowntime.common.checkout
 import org.teamdowntime.common.notification 
 
 def call(Map config) {
