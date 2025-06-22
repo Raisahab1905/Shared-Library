@@ -1,9 +1,8 @@
 package org.teamdowntime.template.react
 
 import org.teamdowntime.common.owasp
-import org.teamdowntime.common.cleanworkspace
 import org.teamdowntime.common.checkout
-import org.teamdowntime.common.notification 
+import org.teamdowntime.common.notification
 
 def call(Map config) {
     def branch = config.get('branch', 'main')
@@ -11,11 +10,16 @@ def call(Map config) {
     def creds = config.get('credentialsId', '')
 
     cleanWs()
-    checkout(branch, url, creds)
+
+    // ✅ Use named arguments map
+    checkout([
+        branch: branch,
+        repoUrl: url,
+        credentialsId: creds
+    ])
 
     owasp.run(this, config)
 
-    // ✅ Notify via Slack and Email
     def notifier = new notification(this)
     notifier.call(config)
 }
