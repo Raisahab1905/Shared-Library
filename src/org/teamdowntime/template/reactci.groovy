@@ -1,32 +1,41 @@
-package org.teamdowntimecrew.common
+package org.teamdowntime.template
 
-class DastRunner {
-    static void run(context, Map config = [:]) {
-        def ZAP_HOME = config.get('ZAP_HOME', "/var/lib/jenkins/.ZAP-CI")
-        def ZAP_DIR = config.get('ZAP_DIR', "/var/lib/jenkins/.ZAP-CI")
-        def TARGET_URL = config.get('TARGET_URL', '')
-        def ZAP_PORT = config.get('ZAP_PORT', '8092')
-        def ZAP_REPORT = "${ZAP_DIR}/report.html"
+// Import all reusable classes
+import org.teamdowntimecrew.common.cleanWorkspace
+import org.teamdowntimecrew.common.checkout
+import org.teamdowntimecrew.common.dast
+import org.teamdowntimecrew.common.notification
+import org.teamdowntimecrew.common.DastRunner
 
-        if (!TARGET_URL?.trim()) {
-            context.error("TARGET_URL is required for DAST scan")
+def call(Map pipelineConfig = [:]) {
+
+    try {
+        stage('Clean Workspace') {
+            CleanWorkspace.run(this)
         }
 
-        context.echo "Running ZAP scan on ${TARGET_URL} using port ${ZAP_PORT}"
-        context.sh """
-            cd ${ZAP_DIR}
-            chmod +x zap.sh
-            ZAP_HOME=${ZAP_HOME} ./zap.sh -cmd \\
-                -port ${ZAP_PORT} \\
-                -quickurl ${TARGET_URL} \\
-                -quickprogress \\
-                -quickout ${ZAP_REPORT}
-        """
+        stage('Checkout Code') {
+            Checkout.run(this, pipelineConfig.checkout)
+        }
 
-        context.echo "Archiving ZAP report..."
-        context.sh "cp ${ZAP_REPORT} ."
-        context.archiveArtifacts artifacts: 'report.html', allowEmptyArchive: false
+        stage('DAST Scan') {
+        DastRunner.run(this, pipelineConfig.dast)
+       }
 
-        context.echo "ZAP scan completed successfully."
+        // success notification
+        stage('Notify Success') {
+            pipelineConfig.notification.status = 'SUCCESS'
+            Notification.send(this, pipelineConfig.notification)
+        }
+
+    } catch (Exception e) {
+        // failure notification
+        stage('Notify Failure') {
+            pipelineConfig.notification.status = 'FAILURE'
+            pipelineConfig.notification.errorMessage = e.message
+            Notification.send(this, pipelineConfig.notification)
+        }
+        currentBuild.result = 'FAILURE'
+        throw e
     }
 }
