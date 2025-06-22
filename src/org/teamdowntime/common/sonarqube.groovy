@@ -1,7 +1,5 @@
 package org.teamdowntime.common
 
-class sonarqube implements Serializable {
-
     def call(String projectKey, String sonarUrl, String sonarSources, String sonarTokenId) {
         // sonarTokenId is the Jenkins credentialsId
         def sonarToken = sh(
@@ -17,4 +15,3 @@ class sonarqube implements Serializable {
             -Dsonar.login=${sonarToken}
         """
     }
-}
