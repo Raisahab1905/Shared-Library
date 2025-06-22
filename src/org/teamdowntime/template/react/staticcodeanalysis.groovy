@@ -1,4 +1,4 @@
-package org.downtimecrew.template.react
+package org.teamdowntime.template.react
 
 import org.teamdowntime.common.*
 
