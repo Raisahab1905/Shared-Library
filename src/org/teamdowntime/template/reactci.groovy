@@ -1,22 +1,22 @@
-package org.teamdowntimecrew.templates
+package org.teamdowntime.template
 
 // Import all reusable classes
-import org.teamdowntimecrew.common.CleanWorkspace
-import org.teamdowntimecrew.common.Checkout
+import org.teamdowntimecrew.common.cleanWorkspace
+import org.teamdowntimecrew.common.checkout
 import org.teamdowntimecrew.common.DastRunner
-import org.teamdowntimecrew.common.Notification
+import org.teamdowntimecrew.common.notification
 
 def call(Map pipelineConfig = [:]) {
     try {
         if (pipelineConfig.cleanworkspace) {
             stage('Clean Workspace') {
-                CleanWorkspace.run(this)
+                cleanWorkspace.run(this)
             }
         }
 
         if (pipelineConfig.checkout) {
             stage('Checkout Code') {
-                Checkout.run(this, pipelineConfig.checkout)
+                checkout.run(this, pipelineConfig.checkout)
             }
         }
 
@@ -29,7 +29,7 @@ def call(Map pipelineConfig = [:]) {
         if (pipelineConfig.notification) {
             stage('Notify Success') {
                 pipelineConfig.notification.status = 'SUCCESS'
-                Notification.send(this, pipelineConfig.notification)
+                notification.send(this, pipelineConfig.notification)
             }
         }
 
@@ -38,7 +38,7 @@ def call(Map pipelineConfig = [:]) {
             stage('Notify Failure') {
                 pipelineConfig.notification.status = 'FAILURE'
                 pipelineConfig.notification.errorMessage = e.message
-                Notification.send(this, pipelineConfig.notification)
+                notification.send(this, pipelineConfig.notification)
             }
         }
         currentBuild.result = 'FAILURE'
