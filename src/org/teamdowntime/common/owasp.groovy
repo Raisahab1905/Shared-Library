@@ -1,6 +1,6 @@
 package org.teamdowntime.common
 
-class owaspdepcheck implements Serializable {
+class owaspdepcheck {
     static void run(context, Map config = [:]) {
         def reportDir     = config.get('reportDir', 'dependency-report')
         def reportHtml    = config.get('reportHtml', 'dependency-check-report.html')
