@@ -18,9 +18,7 @@ def call(Map pipelineConfig = [:]) {
         }
 
         if (pipelineConfig.dast) {
-            stage('DAST Scan') {
                 DastRunner.run(this, pipelineConfig.dast)
-            }
         }
 
         if (pipelineConfig.notification) {
