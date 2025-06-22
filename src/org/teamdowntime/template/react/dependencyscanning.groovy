@@ -1,7 +1,7 @@
 package org.teamdowntime.template.react
 
 import org.teamdowntime.common.owasp
-import org.teamdowntime.common.notification  // ✅ class needs import
+import org.teamdowntime.common.notification 
 
 def call(Map config) {
     def branch = config.get('branch', 'main')
